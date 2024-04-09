@@ -40,6 +40,7 @@
 #include "orbbec_camera/GetCameraParams.h"
 #include <boost/optional.hpp>
 #include <image_transport/image_transport.h>
+#include <diagnostic_updater/diagnostic_updater.h>
 
 #include "jpeg_decoder.h"
 
@@ -118,6 +119,10 @@ class OBCameraNode {
   void setupPipelineConfig();
 
   void setupPublishers();
+
+  void setupDiagnosticUpdater();
+
+  void onTemperatureUpdate(diagnostic_updater::DiagnosticStatusWrapper& status);
 
   void publishStaticTF(const ros::Time& t, const tf2::Vector3& trans, const tf2::Quaternion& q,
                        const std::string& from, const std::string& to);
@@ -427,6 +432,9 @@ class OBCameraNode {
   // ordered point cloud
   bool ordered_pc_ = false;
   bool enable_compressed_color_ = false;
+  std::shared_ptr<diagnostic_updater::Updater> diagnostic_updater_ = nullptr;
+  double  diagnostic_frequency_ = 1.0;
+  ros::WallTimer diagnostic_timer_;
 };
 
 }  // namespace orbbec_camera

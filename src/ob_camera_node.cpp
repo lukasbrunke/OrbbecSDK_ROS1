@@ -54,6 +54,7 @@ void OBCameraNode::init() {
   readDefaultExposure();
   readDefaultGain();
   readDefaultWhiteBalance();
+  setupDiagnosticUpdater();
   is_initialized_ = true;
 #if defined(USE_RK_HW_DECODER)
   mjpeg_decoder_ = std::make_shared<RKMjpegDecoder>(width_[COLOR], height_[COLOR]);

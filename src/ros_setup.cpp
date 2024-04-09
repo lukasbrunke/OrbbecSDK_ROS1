@@ -253,6 +253,38 @@ void OBCameraNode::setupTopics() {
   }
 }
 
+void OBCameraNode::setupDiagnosticUpdater() {
+  if (diagnostic_frequency_ > 0) {
+    diagnostic_updater_ = std::make_shared<diagnostic_updater::Updater>(nh_, nh_private_);
+    diagnostic_updater_->setHardwareID(device_info_->serialNumber());
+    diagnostic_updater_->add("Temperature", this, &OBCameraNode::onTemperatureUpdate);
+    diagnostic_timer_ = nh_.createWallTimer(
+        ros::WallDuration(1.0 / diagnostic_frequency_),
+        [this](const ros::WallTimerEvent& event) { this->diagnostic_updater_->update(); });
+  }
+}
+void OBCameraNode::onTemperatureUpdate(diagnostic_updater::DiagnosticStatusWrapper& status) {
+  try {
+    OBDeviceTemperature temperature;
+    uint32_t data_size = sizeof(OBDeviceTemperature);
+    device_->getStructuredData(OB_STRUCT_DEVICE_TEMPERATURE, &temperature, &data_size);
+    status.add("CPU Temperature", temperature.cpuTemp);
+    status.add("IR Temperature", temperature.irTemp);
+    status.add("LDM Temperature", temperature.ldmTemp);
+    status.add("MainBoard Temperature", temperature.mainBoardTemp);
+    status.add("TEC Temperature", temperature.tecTemp);
+    status.add("IMU Temperature", temperature.imuTemp);
+    status.add("RGB Temperature", temperature.rgbTemp);
+    status.add("Left IR Temperature", temperature.irLeftTemp);
+    status.add("Right IR Temperature", temperature.irRightTemp);
+    status.add("Chip Top Temperature", temperature.chipTopTemp);
+    status.add("Chip Bottom Temperature", temperature.chipBottomTemp);
+    status.summary(diagnostic_msgs::DiagnosticStatus::OK, "Temperature is normal");
+  } catch (const ob::Error& e) {
+    status.summary(diagnostic_msgs::DiagnosticStatus::ERROR, e.getMessage());
+  }
+}
+
 void OBCameraNode::setupPublishers() {
   image_transport::ImageTransport image_transport(nh_);
   for (const auto& stream_index : IMAGE_STREAMS) {

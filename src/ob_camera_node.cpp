@@ -138,7 +138,7 @@ void OBCameraNode::getParameters() {
   ir_info_uri_ = nh_private_.param<std::string>("ir_info_uri", "");
   color_info_uri_ = nh_private_.param<std::string>("color_info_uri", "");
   enable_d2c_viewer_ = nh_private_.param<bool>("enable_d2c_viewer", false);
-  enable_pipeline_ = nh_private_.param<bool>("enable_pipeline", false);
+  enable_pipeline_ = nh_private_.param<bool>("enable_pipeline", true);
   enable_point_cloud_ = nh_private_.param<bool>("enable_point_cloud", true);
   enable_colored_point_cloud_ = nh_private_.param<bool>("enable_colored_point_cloud", false);
   enable_hardware_d2d_ = nh_private_.param<bool>("enable_hardware_d2d", true);

@@ -73,6 +73,7 @@ void OBCameraNodeDriver::init() {
   usb_port_ = nh_private_.param<std::string>("usb_port", "");
   connection_delay_ = nh_private_.param<int>("connection_delay", 100);
   device_num_ = static_cast<int>(nh_private_.param<int>("device_num", 1));
+  camera_name_ = nh_private_.param<std::string>("camera_name", "camera");
   auto enumerate_net_device_ =
       static_cast<int>(nh_private_.param<bool>("enumerate_net_device", false));
   ip_address_ = nh_private_.param<std::string>("ip_address", "");
@@ -85,6 +86,8 @@ void OBCameraNodeDriver::init() {
     deviceConnectCallback(added_list);
     deviceDisconnectCallback(removed_list);
   });
+  std::string device_info_topic = "/" + camera_name_ + "/device_info";
+  device_info_pub_ = nh_private_.advertise<orbbec_camera::DeviceInfo>(device_info_topic, 1, true);
   query_thread_ = std::make_shared<std::thread>([this]() { queryDevice(); });
   reset_device_thread_ = std::make_shared<std::thread>([this]() { resetDeviceThread(); });
 }
@@ -201,6 +204,13 @@ void OBCameraNodeDriver::initializeDevice(const std::shared_ptr<ob::Device>& dev
   auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
   ROS_INFO_STREAM("initializeDevice: device " << device_info_->serialNumber() << " connected in "
                                               << duration.count() << " ms");
+  DeviceInfo device_info_msg;
+  device_info_msg.serial_number = device_info_->serialNumber();
+  device_info_msg.firmware_version = device_info_->firmwareVersion();
+  device_info_msg.hardware_version = device_info_->hardwareVersion();
+  device_info_msg.name = device_info_->name();
+  device_info_msg.process_id = getpid();
+  device_info_pub_.publish(device_info_msg);
 }
 
 void OBCameraNodeDriver::deviceConnectCallback(const std::shared_ptr<ob::DeviceList>& list) {

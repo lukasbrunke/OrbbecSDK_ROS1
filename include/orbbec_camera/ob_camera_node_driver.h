@@ -20,6 +20,7 @@
 #include <mutex>
 #include <semaphore.h>
 #include <pthread.h>
+#include "orbbec_camera/DeviceInfo.h"
 
 namespace orbbec_camera {
 
@@ -87,5 +88,7 @@ class OBCameraNodeDriver {
   // net work config
   std::string ip_address_;
   int port_ = 0;
+  ros::Publisher device_info_pub_;
+  std::string camera_name_="camera";
 };
 }  // namespace orbbec_camera

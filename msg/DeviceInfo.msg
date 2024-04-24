@@ -1,7 +1,6 @@
 std_msgs/Header header
 string name
-int32 vid
-int32 pid
+int32 process_id
 string serial_number
 string firmware_version
 string supported_min_sdk_version

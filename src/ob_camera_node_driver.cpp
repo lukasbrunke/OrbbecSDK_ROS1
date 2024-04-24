@@ -195,6 +195,7 @@ void OBCameraNodeDriver::initializeDevice(const std::shared_ptr<ob::Device>& dev
     ctx_->enableDeviceClockSync(5000);
   }
   CHECK_NOTNULL(device_info_.get());
+  ROS_INFO_STREAM("Current node process id: " << getpid());
   ROS_INFO_STREAM("Device " << device_info_->name() << " connected");
   ROS_INFO_STREAM("Serial number: " << device_info_->serialNumber());
   ROS_INFO_STREAM("Firmware version: " << device_info_->firmwareVersion());
@@ -202,7 +203,8 @@ void OBCameraNodeDriver::initializeDevice(const std::shared_ptr<ob::Device>& dev
   ROS_INFO_STREAM("device uid: " << device_info_->uid());
   auto end_time = std::chrono::steady_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
-  ROS_INFO_STREAM("initializeDevice: device " << device_info_->serialNumber() << " connected in "
+  ROS_INFO_STREAM("ORBBEC camera is up and running");
+  ROS_INFO_STREAM("initializeDevice: device " << device_info_->serialNumber() << " cost "
                                               << duration.count() << " ms");
   DeviceInfo device_info_msg;
   device_info_msg.serial_number = device_info_->serialNumber();

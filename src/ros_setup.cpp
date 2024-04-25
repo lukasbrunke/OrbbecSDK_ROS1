@@ -254,7 +254,7 @@ void OBCameraNode::setupTopics() {
 }
 
 void OBCameraNode::setupDiagnosticUpdater() {
-  if(!device_->isPropertySupported(OB_STRUCT_DEVICE_TEMPERATURE, OB_PERMISSION_READ_WRITE)){
+  if(!device_->isPropertySupported(OB_STRUCT_DEVICE_TEMPERATURE, OB_PERMISSION_READ)){
     ROS_WARN_STREAM("Device does not support temperature reading");
     return;
   }

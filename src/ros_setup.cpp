@@ -254,6 +254,10 @@ void OBCameraNode::setupTopics() {
 }
 
 void OBCameraNode::setupDiagnosticUpdater() {
+  if(!device_->isPropertySupported(OB_STRUCT_DEVICE_TEMPERATURE, OB_PERMISSION_READ_WRITE)){
+    ROS_WARN_STREAM("Device does not support temperature reading");
+    return;
+  }
   if (diagnostic_frequency_ > 0) {
     diagnostic_updater_ = std::make_shared<diagnostic_updater::Updater>(nh_, nh_private_);
     diagnostic_updater_->setHardwareID(device_info_->serialNumber());

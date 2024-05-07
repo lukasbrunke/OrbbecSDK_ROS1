@@ -132,6 +132,10 @@ void OBCameraNode::getParameters() {
     depth_aligned_frame_id_[stream_index] = optical_frame_id_[COLOR];
   }
   use_hardware_time_ = nh_private_.param<bool>("use_hardware_time", true);
+  auto device_info = device_->getDeviceInfo();
+  if (isOpenNIDevice(device_info->pid())) {
+    use_hardware_time_ = false;
+  }
   publish_tf_ = nh_private_.param<bool>("publish_tf", false);
   depth_registration_ = nh_private_.param<bool>("depth_registration", false);
   enable_frame_sync_ = nh_private_.param<bool>("enable_frame_sync", false);

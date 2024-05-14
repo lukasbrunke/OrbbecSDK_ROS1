@@ -6,30 +6,27 @@ Orbbec ROS SDK is a wrapper for Orbbec SDK that supports ROS Kinetic, Melodic, a
 It enables smooth integration of Orbbec 3D cameras into ROS projects.
 
 ## Table of Contents
-
 <!-- TOC -->
-
 * [Orbbec ROS SDK](#orbbec-ros-sdk)
-    * [Table of Contents](#table-of-contents)
-    * [Install Dependencies](#install-dependencies)
-        * [ROS](#ros)
-        * [Other Dependencies](#other-dependencies)
-    * [Create ROS Workspace and Build](#create-ros-workspace-and-build)
-    * [Start the Camera](#start-the-camera)
-    * [Select Topics and Control the Camera](#select-topics-and-control-the-camera)
-    * [Launch Parameters](#launch-parameters)
-    * [Check which profiles the camera supports](#check-which-profiles-the-camera-supports)
-    * [Available Services for Camera Control](#available-services-for-camera-control)
-    * [Available Topics](#available-topics)
-    * [Building a Debian Package](#building-a-debian-package)
-    * [Launch files](#launch-files)
-    * [Supported hardware products](#supported-hardware-products)
-    * [Frequently Asked Questions](#frequently-asked-questions)
-        * [No Picture from Multiple Cameras](#no-picture-from-multiple-cameras)
-        * [Error: "Failed to start device: usbEnumerator createUsbDevice failed!"](#error-failed-to-start-device-usbenumerator-createusbdevice-failed)
-    * [Other useful links](#other-useful-links)
-    * [License](#license)
-
+  * [Table of Contents](#table-of-contents)
+  * [Install Dependencies](#install-dependencies)
+    * [ROS](#ros)
+    * [Other Dependencies](#other-dependencies)
+  * [Create ROS Workspace and Build](#create-ros-workspace-and-build)
+  * [Start the Camera](#start-the-camera)
+  * [Select Topics and Control the Camera](#select-topics-and-control-the-camera)
+  * [Launch Parameters](#launch-parameters)
+  * [Check which profiles the camera supports](#check-which-profiles-the-camera-supports)
+  * [Available Services for Camera Control](#available-services-for-camera-control)
+  * [Available Topics](#available-topics)
+  * [Building a Debian Package](#building-a-debian-package)
+  * [Launch files](#launch-files)
+  * [Supported hardware products](#supported-hardware-products)
+  * [Frequently Asked Questions](#frequently-asked-questions)
+    * [No Picture from Multiple Cameras](#no-picture-from-multiple-cameras)
+    * [Error: "Failed to start device: usbEnumerator createUsbDevice failed!"](#error-failed-to-start-device-usbenumerator-createusbdevice-failed)
+  * [Other useful links](#other-useful-links)
+  * [License](#license)
 <!-- TOC -->
 
 ## Install Dependencies
@@ -88,7 +85,7 @@ In terminal 1:
 
 ```bash
 source ./devel/setup.bash
-roslaunch orbbec_camera gemini_330_series.launch
+roslaunch orbbec_camera gemini_336.launch
 ```
 
 In terminal 2:

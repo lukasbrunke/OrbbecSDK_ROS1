@@ -72,18 +72,23 @@
     <arg name="enable_spatial_filter" default="false"/>
     <arg name="enable_temporal_filter" default="false"/>
     <arg name="enable_hole_filling_filter" default="false"/>
-    <arg name="sequence_id_filter_id" default="1"/>
-    <arg name="threshold_filter_max" default="16000"/>
-    <arg name="threshold_filter_min" default="0"/>
+    <!--    -1 means not set, other value bigger than 0, the value is the filter parameter, same below-->
+    <arg name="sequence_id_filter_id" default="-1"/>
+    <arg name="threshold_filter_max" default="-1"/>
+    <arg name="threshold_filter_min" default="-1"/>
+    <arg name="hdr_merge_exposure_1" default="-1"/>
+    <arg name="hdr_merge_gain_1" default="-1"/>
+    <arg name="hdr_merge_exposure_2" default="-1"/>
+    <arg name="hdr_merge_gain_2" default="-1"/>
     <arg name="noise_removal_filter_min_diff" default="256"/>
     <arg name="noise_removal_filter_max_size" default="80"/>
-    <arg name="spatial_filter_alpha" default="0.5"/>
-    <arg name="spatial_filter_diff_threshold" default="8"/>
-    <arg name="spatial_filter_magnitude" default="1"/>
-    <arg name="spatial_filter_radius" default="1"/>
-    <arg name="temporal_filter_diff_threshold" default="0.1"/>
-    <arg name="temporal_filter_weight" default="0.4"/>
-    <arg name="hole_filling_filter_mode" default="FILL_TOP"/>
+    <arg name="spatial_filter_alpha" default="-1.0"/>
+    <arg name="spatial_filter_diff_threshold" default="-1.0"/>
+    <arg name="spatial_filter_magnitude" default="-1.0"/>
+    <arg name="spatial_filter_radius" default="-1.0"/>
+    <arg name="temporal_filter_diff_threshold" default="-1.0"/>
+    <arg name="temporal_filter_weight" default="-1.0"/>
+    <arg name="hole_filling_filter_mode" default=""/>
     <!-- IMU parameters -->
     <arg name="enable_sync_output_accel_gyro" default="true"/>
     <arg name="enable_accel" default="true"/>
@@ -164,6 +169,10 @@
             <param name="sequence_id_filter_id" value="$(arg sequence_id_filter_id)"/>
             <param name="threshold_filter_max" value="$(arg threshold_filter_max)"/>
             <param name="threshold_filter_min" value="$(arg threshold_filter_min)"/>
+            <param name="hdr_merge_exposure_1" value="$(arg hdr_merge_exposure_1)"/>
+            <param name="hdr_merge_gain_1" value="$(arg hdr_merge_gain_1)"/>
+            <param name="hdr_merge_exposure_2" value="$(arg hdr_merge_exposure_2)"/>
+            <param name="hdr_merge_gain_2" value="$(arg hdr_merge_gain_2)"/>
             <param name="noise_removal_filter_min_diff" value="$(arg noise_removal_filter_min_diff)"/>
             <param name="noise_removal_filter_max_size" value="$(arg noise_removal_filter_max_size)"/>
             <param name="spatial_filter_alpha" value="$(arg spatial_filter_alpha)"/>

@@ -494,6 +494,10 @@ class OBCameraNode {
   std::shared_ptr<ob::Align> align_filter_ = nullptr;
   OBStreamType align_target_stream_ = OB_STREAM_COLOR;
   bool retry_on_usb3_detection_failure_ = false;
+  int hdr_merge_exposure_1_ = -1;
+  int hdr_merge_gain_1_ = -1;
+  int hdr_merge_exposure_2_ = -1;
+  int hdr_merge_gain_2_ = -1;
 };
 
 }  // namespace orbbec_camera

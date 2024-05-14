@@ -195,20 +195,20 @@ void OBCameraNode::getParameters() {
   enable_spatial_filter_ = nh_private_.param<bool>("enable_spatial_filter", true);
   enable_temporal_filter_ = nh_private_.param<bool>("enable_temporal_filter", false);
   enable_hole_filling_filter_ = nh_private_.param<bool>("enable_hole_filling_filter", false);
-  decimation_filter_scale_range_ = nh_private_.param<int>("decimation_filter_scale_range", 2);
-  sequence_id_filter_id_ = nh_private_.param<int>("sequence_id_filter_id", 1);
-  threshold_filter_max_ = nh_private_.param<int>("threshold_filter_max", 16000);
-  threshold_filter_min_ = nh_private_.param<int>("threshold_filter_min", 0);
-  noise_removal_filter_min_diff_ = nh_private_.param<int>("noise_removal_filter_min_diff", 8);
+  decimation_filter_scale_range_ = nh_private_.param<int>("decimation_filter_scale_range", -1);
+  sequence_id_filter_id_ = nh_private_.param<int>("sequence_id_filter_id", -1);
+  threshold_filter_max_ = nh_private_.param<int>("threshold_filter_max", -1);
+  threshold_filter_min_ = nh_private_.param<int>("threshold_filter_min", -1);
+  noise_removal_filter_min_diff_ = nh_private_.param<int>("noise_removal_filter_min_diff", 250);
   noise_removal_filter_max_size_ = nh_private_.param<int>("noise_removal_filter_max_size", 80);
-  spatial_filter_alpha_ = nh_private_.param<float>("spatial_filter_alpha", 0.5);
-  spatial_filter_diff_threshold_ = nh_private_.param<int>("spatial_filter_diff_threshold", 8);
-  spatial_filter_magnitude_ = nh_private_.param<int>("spatial_filter_magnitude", 1);
-  spatial_filter_radius_ = nh_private_.param<int>("spatial_filter_radius", 1);
-  temporal_filter_diff_threshold_ = nh_private_.param<float>("temporal_filter_diff_threshold", 0.1);
-  temporal_filter_weight_ = nh_private_.param<float>("temporal_filter_weight", 0.4);
+  spatial_filter_alpha_ = nh_private_.param<float>("spatial_filter_alpha", -1.0);
+  spatial_filter_diff_threshold_ = nh_private_.param<int>("spatial_filter_diff_threshold", -1);
+  spatial_filter_magnitude_ = nh_private_.param<int>("spatial_filter_magnitude", -1);
+  spatial_filter_radius_ = nh_private_.param<int>("spatial_filter_radius", -1);
+  temporal_filter_diff_threshold_ = nh_private_.param<float>("temporal_filter_diff_threshold", -1.0);
+  temporal_filter_weight_ = nh_private_.param<float>("temporal_filter_weight", -1.0);
   hole_filling_filter_mode_ =
-      nh_private_.param<std::string>("hole_filling_filter_mode", "FILL_TOP");
+      nh_private_.param<std::string>("hole_filling_filter_mode", "");
   diagnostics_frequency_ = nh_private_.param<double>("diagnostics_frequency", 1.0);
   enable_laser_ = nh_private_.param<bool>("enable_laser", true);
   laser_on_off_mode_ = nh_private_.param<int>("laser_on_off_mode", 0);
@@ -221,6 +221,11 @@ void OBCameraNode::getParameters() {
   if (isOpenNIDevice(device_info->pid())) {
     use_hardware_time_ = false;
   }
+
+  hdr_merge_exposure_1_ = nh_private_.param<int>("hdr_merge_exposure_1", -1);
+  hdr_merge_gain_1_ = nh_private_.param<int>("hdr_merge_gain_1", -1);
+  hdr_merge_exposure_2_ = nh_private_.param<int>("hdr_merge_exposure_2", -1);
+  hdr_merge_gain_2_ = nh_private_.param<int>("hdr_merge_gain_2", -1);
 }
 
 void OBCameraNode::startStreams() {

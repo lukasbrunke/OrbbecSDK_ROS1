@@ -63,14 +63,14 @@ void OBCameraNode::setupCameraCtrlServices() {
                                                std_srvs::EmptyResponse& response) {
               return this->resetCameraGainCallback(request, response, stream_index);
             });
-    service_name = "/" + camera_name_ + "/" + "set_" + stream_name + "_mirror";
-    set_mirror_srv_[stream_index] =
-        nh_.advertiseService<std_srvs::SetBoolRequest, std_srvs::SetBoolResponse>(
-            service_name, [this, stream_index](std_srvs::SetBoolRequest& request,
-                                               std_srvs::SetBoolResponse& response) {
-              response.success = this->setMirrorCallback(request, response, stream_index);
-              return response.success;
-            });
+//    service_name = "/" + camera_name_ + "/" + "set_" + stream_name + "_mirror";
+//    set_mirror_srv_[stream_index] =
+//        nh_.advertiseService<std_srvs::SetBoolRequest, std_srvs::SetBoolResponse>(
+//            service_name, [this, stream_index](std_srvs::SetBoolRequest& request,
+//                                               std_srvs::SetBoolResponse& response) {
+//              response.success = this->setMirrorCallback(request, response, stream_index);
+//              return response.success;
+//            });
     service_name = "/" + camera_name_ + "/" + "set_" + stream_name + "_auto_exposure";
     set_auto_exposure_srv_[stream_index] =
         nh_.advertiseService<std_srvs::SetBoolRequest, std_srvs::SetBoolResponse>(

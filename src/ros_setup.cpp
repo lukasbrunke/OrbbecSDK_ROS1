@@ -193,44 +193,70 @@ void OBCameraNode::setupDevices() {
       }
       if (filter_name == "DecimationFilter" && enable_decimation_filter_) {
         auto decimation_filter = filter->as<ob::DecimationFilter>();
-        decimation_filter->setScaleValue(decimation_filter_scale_range_);
+        if (decimation_filter_scale_range_ != -1) {
+          decimation_filter->setScaleValue(decimation_filter_scale_range_);
+        }
       } else if (filter_name == "ThresholdFilter" && enable_threshold_filter_) {
         auto threshold_filter = filter->as<ob::ThresholdFilter>();
-        threshold_filter->setValueRange(threshold_filter_min_, threshold_filter_max_);
+        if (threshold_filter_min_ != -1 && threshold_filter_max_ != -1) {
+          threshold_filter->setValueRange(threshold_filter_min_, threshold_filter_max_);
+        }
       } else if (filter_name == "SpatialAdvancedFilter" && enable_spatial_filter_) {
         auto spatial_filter = filter->as<ob::SpatialAdvancedFilter>();
         OBSpatialAdvancedFilterParams params{};
-        params.alpha = spatial_filter_alpha_;
-        params.magnitude = spatial_filter_magnitude_;
-        params.radius = spatial_filter_radius_;
-        params.disp_diff = spatial_filter_diff_threshold_;
-        spatial_filter->setFilterParams(params);
+        if (spatial_filter_alpha_ != -1.0 && spatial_filter_magnitude_ != -1 &&
+            spatial_filter_radius_ != -1 && spatial_filter_diff_threshold_ != -1) {
+          params.alpha = spatial_filter_alpha_;
+          params.magnitude = spatial_filter_magnitude_;
+          params.radius = spatial_filter_radius_;
+          params.disp_diff = spatial_filter_diff_threshold_;
+          spatial_filter->setFilterParams(params);
+        }
       } else if (filter_name == "TemporalFilter" && enable_temporal_filter_) {
         auto temporal_filter = filter->as<ob::TemporalFilter>();
-        temporal_filter->setDiffScale(temporal_filter_diff_threshold_);
-        temporal_filter->setWeight(temporal_filter_weight_);
-      } else if (filter_name == "HoleFillingFilter") {
+        if (temporal_filter_diff_threshold_ != -1.0 && temporal_filter_weight_ != -1.0) {
+          temporal_filter->setDiffScale(temporal_filter_diff_threshold_);
+          temporal_filter->setWeight(temporal_filter_weight_);
+        }
+      } else if (filter_name == "HoleFillingFilter" && enable_hole_filling_filter_ &&
+                 !hole_filling_filter_mode_.empty()) {
         auto hole_filling_filter = filter->as<ob::HoleFillingFilter>();
         OBHoleFillingMode hole_filling_mode = holeFillingModeFromString(hole_filling_filter_mode_);
         hole_filling_filter->setFilterMode(hole_filling_mode);
       } else if (filter_name == "SequenceIdFilter" && enable_sequenced_filter_) {
         auto sequenced_filter = filter->as<ob::SequenceIdFilter>();
-        sequenced_filter->selectSequenceId(sequence_id_filter_id_);
+        if (sequence_id_filter_id_ != -1) {
+          sequenced_filter->selectSequenceId(sequence_id_filter_id_);
+        }
       } else if (filter_name == "NoiseRemovalFilter" && enable_noise_removal_filter_) {
         auto noise_removal_filter = filter->as<ob::NoiseRemovalFilter>();
         OBNoiseRemovalFilterParams params = noise_removal_filter->getFilterParams();
-        ROS_INFO_STREAM("Before setting noise removal filter params: disp_diff: "
-                        << params.disp_diff << " max_size: " << params.max_size);
-        params.disp_diff = noise_removal_filter_min_diff_;
-        params.max_size = noise_removal_filter_max_size_;
-        ROS_INFO_STREAM("Setting noise removal filter params: disp_diff: "
-                        << params.disp_diff << " max_size: " << params.max_size);
-        noise_removal_filter->setFilterParams(params);
-        params = noise_removal_filter->getFilterParams();
-        ROS_INFO_STREAM("After setting noise removal filter params: disp_diff: "
-                        << params.disp_diff << " max_size: " << params.max_size);
-      } else if (filter_name == "HDRMerge") {
-        // do nothing
+        if (noise_removal_filter_min_diff_ != -1 && noise_removal_filter_max_size_ != -1) {
+          ROS_INFO_STREAM("Before setting noise removal filter params: disp_diff: "
+                          << params.disp_diff << " max_size: " << params.max_size);
+          params.disp_diff = noise_removal_filter_min_diff_;
+          params.max_size = noise_removal_filter_max_size_;
+          ROS_INFO_STREAM("Setting noise removal filter params: disp_diff: "
+                          << params.disp_diff << " max_size: " << params.max_size);
+          noise_removal_filter->setFilterParams(params);
+          params = noise_removal_filter->getFilterParams();
+          ROS_INFO_STREAM("After setting noise removal filter params: disp_diff: "
+                          << params.disp_diff << " max_size: " << params.max_size);
+        }
+      } else if (filter_name == "HDRMerge" && enable_hdr_merge_ &&
+                 device_->isPropertySupported(OB_STRUCT_DEPTH_HDR_CONFIG, OB_PERMISSION_WRITE)) {
+        if (hdr_merge_exposure_1_ != -1 && hdr_merge_gain_1_ != -1 && hdr_merge_exposure_2_ != -1 &&
+            hdr_merge_gain_2_ != -1) {
+          OBHdrConfig config;
+          config.enable = true;
+          config.exposure_1 = hdr_merge_exposure_1_;
+          config.gain_1 = hdr_merge_gain_1_;
+          config.exposure_2 = hdr_merge_exposure_2_;
+          config.gain_2 = hdr_merge_gain_2_;
+          device_->setStructuredData(OB_STRUCT_DEPTH_HDR_CONFIG, &config, sizeof(OBHdrConfig));
+        } else {
+          ROS_INFO_STREAM("Skip setting " << filter_name);
+        }
       } else {
         ROS_INFO_STREAM("Skip setting " << filter_name);
       }

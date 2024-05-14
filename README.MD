@@ -8,26 +8,28 @@ It enables smooth integration of Orbbec 3D cameras into ROS projects.
 ## Table of Contents
 
 <!-- TOC -->
+
 * [Orbbec ROS SDK](#orbbec-ros-sdk)
-  * [Table of Contents](#table-of-contents)
-  * [Install Dependencies](#install-dependencies)
-    * [ROS](#ros)
-    * [Other Dependencies](#other-dependencies)
-  * [Create ROS Workspace and Build](#create-ros-workspace-and-build)
-  * [Start the Camera](#start-the-camera)
-  * [Select Topics and Control the Camera](#select-topics-and-control-the-camera)
-  * [Launch Parameters](#launch-parameters)
-  * [Check which profiles the camera supports](#check-which-profiles-the-camera-supports)
-  * [Available Services for Camera Control](#available-services-for-camera-control)
-  * [Available Topics](#available-topics)
-  * [Building a Debian Package](#building-a-debian-package)
-  * [Launch files](#launch-files)
-  * [Supported hardware products](#supported-hardware-products)
-  * [Frequently Asked Questions](#frequently-asked-questions)
-    * [No Picture from Multiple Cameras](#no-picture-from-multiple-cameras)
-    * [Error: "Failed to start device: usbEnumerator createUsbDevice failed!"](#error-failed-to-start-device-usbenumerator-createusbdevice-failed)
-  * [Other useful links](#other-useful-links)
-  * [License](#license)
+    * [Table of Contents](#table-of-contents)
+    * [Install Dependencies](#install-dependencies)
+        * [ROS](#ros)
+        * [Other Dependencies](#other-dependencies)
+    * [Create ROS Workspace and Build](#create-ros-workspace-and-build)
+    * [Start the Camera](#start-the-camera)
+    * [Select Topics and Control the Camera](#select-topics-and-control-the-camera)
+    * [Launch Parameters](#launch-parameters)
+    * [Check which profiles the camera supports](#check-which-profiles-the-camera-supports)
+    * [Available Services for Camera Control](#available-services-for-camera-control)
+    * [Available Topics](#available-topics)
+    * [Building a Debian Package](#building-a-debian-package)
+    * [Launch files](#launch-files)
+    * [Supported hardware products](#supported-hardware-products)
+    * [Frequently Asked Questions](#frequently-asked-questions)
+        * [No Picture from Multiple Cameras](#no-picture-from-multiple-cameras)
+        * [Error: "Failed to start device: usbEnumerator createUsbDevice failed!"](#error-failed-to-start-device-usbenumerator-createusbdevice-failed)
+    * [Other useful links](#other-useful-links)
+    * [License](#license)
+
 <!-- TOC -->
 
 ## Install Dependencies
@@ -329,11 +331,10 @@ bash .make_deb.sh
 
 ## Launch files
 
-| product serials   | launch file              |
-|-------------------|--------------------------|
-| gemini 330 series | gemini_330_series.launch |
-| gemini 336        | gemini 336.launch        |
-| gemini 33L        | gemini 336L.launch       |
+| product serials | launch file        |
+|-----------------|--------------------|
+| gemini 336      | gemini 336.launch  |
+| gemini 33L      | gemini 336L.launch |
 
 **All launch files are essentially similar, with the primary difference being the default values of the parameters set
 for different models

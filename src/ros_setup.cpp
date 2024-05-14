@@ -123,7 +123,10 @@ void OBCameraNode::setupDevices() {
       ROS_INFO_STREAM("Depth process is " << d2d_mode);
     }
     if (!device_preset_.empty()) {
+      ROS_INFO_STREAM("current device preset: " << device_->getCurrentPresetName());
+      ROS_INFO_STREAM("load device preset: " << device_preset_);
       device_->loadPreset(device_preset_.c_str());
+      ROS_INFO_STREAM("After load device preset: " << device_->getCurrentPresetName());
     }
     auto depth_sensor = device_->getSensor(OB_SENSOR_DEPTH);
     device_->setBoolProperty(OB_PROP_DEPTH_AUTO_EXPOSURE_BOOL, enable_ir_auto_exposure_);

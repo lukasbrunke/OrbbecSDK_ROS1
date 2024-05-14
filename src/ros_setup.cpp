@@ -218,10 +218,17 @@ void OBCameraNode::setupDevices() {
         sequenced_filter->selectSequenceId(sequence_id_filter_id_);
       } else if (filter_name == "NoiseRemovalFilter" && enable_noise_removal_filter_) {
         auto noise_removal_filter = filter->as<ob::NoiseRemovalFilter>();
-        OBNoiseRemovalFilterParams params{};
+        OBNoiseRemovalFilterParams params = noise_removal_filter->getFilterParams();
+        ROS_INFO_STREAM("Before setting noise removal filter params: disp_diff: "
+                        << params.disp_diff << " max_size: " << params.max_size);
         params.disp_diff = noise_removal_filter_min_diff_;
         params.max_size = noise_removal_filter_max_size_;
+        ROS_INFO_STREAM("Setting noise removal filter params: disp_diff: "
+                        << params.disp_diff << " max_size: " << params.max_size);
         noise_removal_filter->setFilterParams(params);
+        params = noise_removal_filter->getFilterParams();
+        ROS_INFO_STREAM("After setting noise removal filter params: disp_diff: "
+                        << params.disp_diff << " max_size: " << params.max_size);
       } else if (filter_name == "HDRMerge") {
         // do nothing
       } else {

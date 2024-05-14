@@ -108,7 +108,7 @@ rosservice list
 rosparam list
 ```
 
-Get camera parameters (_MUST_ start stream first):
+Get camera parameters (*MUST* start stream first):
 
 ```bash
 rosservice call /camera/get_camera_params "{}"
@@ -240,44 +240,6 @@ The following launch parameters are available:
   attempt to reset the camera up to three times. This setting aims to prevent USB 3.0 devices from being incorrectly
   recognized as USB 2.0.
   It is recommended to set this parameter to `false` when using a USB 2.0 connection to avoid unnecessary resets.
-
-## Depth work mode switch:
-
-- Before starting the camera, depth work mode (depth_work_mode) can be configured for the corresponding xxx.launch
-  file's support.
-- The depth work mode switch is supported by Gemini 2, Gemini 2 L, and Gemini 2 XL cameras.
-- The default depth work mode configuration of xxx.launch is the camera's default configuration. If you need to modify
-  it, you can switch to the corresponding mode as needed.
-- The specific camera depth work mode support types can be found in the comments of the depth mode.
-
-```XML
-<!-- Depth work mode support is as follows： -->
-<!-- Unbinned Dense Default -->
-<!-- Unbinned Sparse Default -->
-<!-- Binned Sparse Default -->
-<!-- Obstacle Avoidance -->
-<arg name="depth_work_mode" default=""/>
-```
-
-- View depth work modes:
-
-```bash
-rosrun orbbec_camera list_depth_work_mode_node
-```
-
-## Configuration of depth NFOV and WFOV modes
-
-For the **Femto Mega** and **Femto Bolt** devices, the NFOV and WFOV modes are implemented by configuring the resolution of
-Depth and IR in the launch file.
-In launch file, depth_width、depth_height、ir_width、ir_height represents the resolution of the depth and the resolution of
-the IR.
-The frame fps and resolution of IR must be consistent with the depth. The correspondence between different modes and
-resolutions is as follows:
-
-- NFOV unbinned: 640 x 576.
-- NFOV binned: 320 x 288.
-- WFOV unbinned: 1024 x 1024.
-- WFOV binned: 512 x 512.
 
 ## Check which profiles the camera supports
 

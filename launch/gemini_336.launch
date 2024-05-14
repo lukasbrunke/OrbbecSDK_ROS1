@@ -29,7 +29,7 @@
 
     <!-- Depth camera parameters -->
     <arg name="depth_width" default="1280"/>
-    <arg name="depth_height" default="800"/>
+    <arg name="depth_height" default="720"/>
     <arg name="depth_fps" default="15"/>
     <arg name="enable_depth" default="true"/>
     <arg name="depth_format" default="Y16"/>
@@ -37,14 +37,14 @@
 
     <!-- Left IR camera parameters -->
     <arg name="left_ir_width" default="1280"/>
-    <arg name="left_ir_height" default="800"/>
+    <arg name="left_ir_height" default="720"/>
     <arg name="left_ir_fps" default="15"/>
     <arg name="enable_left_ir" default="false"/>
     <arg name="left_ir_format" default="Y8"/>
 
     <!-- Right IR camera parameters -->
     <arg name="right_ir_width" default="1280"/>
-    <arg name="right_ir_height" default="800"/>
+    <arg name="right_ir_height" default="720"/>
     <arg name="right_ir_fps" default="15"/>
     <arg name="enable_right_ir" default="false"/>
     <arg name="right_ir_format" default="Y8"/>
@@ -57,7 +57,7 @@
     <arg name="enable_ir_long_exposure" default="false"/>
 
     <!-- Point cloud parameters -->
-    <arg name="enable_point_cloud" default="true"/>
+    <arg name="enable_point_cloud" default="false"/>
     <arg name="enable_colored_point_cloud" default="true"/>
     <arg name="ordered_pc" default="false"/>
     <!-- Gemini 335/335L only support SW align mode, Please DO NOT change it -->
@@ -105,6 +105,8 @@
     <arg name="device_num" default="1"/>
 
     <arg name="retry_on_usb3_detection_failure" default="false"/>
+    <arg name="enable_d2c_viewer" default="false"/>
+
 
     <group ns="$(arg camera_name)">
         <node name="camera" pkg="orbbec_camera" type="orbbec_camera_node" output="screen">
@@ -196,6 +198,7 @@
             <param name="serial_number" value="$(arg serial_number)"/>
             <param name="device_num" value="$(arg device_num)"/>
             <param name="retry_on_usb3_detection_failure" value="$(arg retry_on_usb3_detection_failure)"/>
+            <param name="enable_d2c_viewer" value="$(arg enable_d2c_viewer)"/>
             <!-- Remap the depth registered point cloud topic -->
             <remap from="/$(arg camera_name)/depth/color/points" to="/$(arg camera_name)/depth_registered/points"/>
         </node>

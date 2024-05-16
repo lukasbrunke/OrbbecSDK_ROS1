@@ -237,6 +237,8 @@ The following launch parameters are available:
   recognized as USB 2.0.
   It is recommended to set this parameter to `false` when using a USB 2.0 connection to avoid unnecessary resets.
 
+**IMPORTANT**: *Please carefully read the instructions regarding software filtering settings at [this link](https://www.orbbec.com/docs/g330-use-depth-post-processing-blocks/). If you are uncertain, do not modify these settings.*
+
 ## Check which profiles the camera supports
 
 ```bash
@@ -308,6 +310,11 @@ launch file's stream argument.
 - `/camera/left_ir/image_raw`: The left IR stream image.
 - `/camera/right_ir/camera_info`: The right IR camera info.
 - `/camera/right_ir/image_raw`: The right IR stream image.
+- `/camera/accel/sample`: Acceleration data stream `enable_sync_output_accel_gyro`turned off，`enable_accel`turned on
+- `/camera/gyro/sample`: Gyroscope data stream，enable_sync_output_accel_gyro`turned off，`enable_gyro`turned on
+- `camera/gyro_accel/sample`: Synchronized data stream of acceleration and gyroscope，`enable_sync_output_accel_gyro`
+  turned on
+- `/diagnostics`: The diagnostic information of the camera, Currently, the diagnostic information only includes the temperature of the camera.
 
 ## Building a Debian Package
 
@@ -386,6 +393,7 @@ products: [Product Support](https://github.com/orbbec/OrbbecSDK?tab=readme-ov-fi
 
 - [Orbbec SDK](https://orbbec.github.io/OrbbecSDK/)
 - [Gemini 330 depth presets](https://www.orbbec.com/docs/g330-use-depth-presets/)
+- [Gemini 330 depth post procession blocks](https://www.orbbec.com/docs/g330-use-depth-post-processing-blocks/)
 
 ## License
 

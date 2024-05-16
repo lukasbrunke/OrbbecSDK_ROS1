@@ -57,6 +57,8 @@ bool isOpenNIDevice(int pid);
 
 OBMultiDeviceSyncMode OBSyncModeFromString(const std::string &mode);
 
+std::string  OBSyncModeToString(const OBMultiDeviceSyncMode &mode);
+
 OB_SAMPLE_RATE sampleRateFromString(std::string &sample_rate);
 
 std::string sampleRateToString(const OB_SAMPLE_RATE &sample_rate);

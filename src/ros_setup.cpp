@@ -122,6 +122,25 @@ void OBCameraNode::setupDevices() {
       std::string d2d_mode = is_hardware_d2d ? "HW D2D" : "SW D2D";
       ROS_INFO_STREAM("Depth process is " << d2d_mode);
     }
+    if (!sync_mode_str_.empty() &&
+        device_->isPropertySupported(OB_PROP_SYNC_SIGNAL_TRIGGER_OUT_BOOL,
+                                     OB_PERMISSION_READ_WRITE)) {
+      std::transform(sync_mode_str_.begin(), sync_mode_str_.end(), sync_mode_str_.begin(),
+                     ::toupper);
+      auto sync_config = device_->getMultiDeviceSyncConfig();
+      ROS_INFO_STREAM("current sync mode: " << OBSyncModeToString(sync_config.syncMode));
+      sync_mode_ = OBSyncModeFromString(sync_mode_str_);
+      ROS_INFO_STREAM("load sync mode: " << sync_mode_str_);
+      sync_config.syncMode = sync_mode_;
+      sync_config.depthDelayUs = depth_delay_us_;
+      sync_config.colorDelayUs = color_delay_us_;
+      sync_config.trigger2ImageDelayUs = trigger2image_delay_us_;
+      sync_config.triggerOutDelayUs = trigger_out_delay_us_;
+      sync_config.triggerOutEnable = trigger_out_enabled_;
+      device_->setMultiDeviceSyncConfig(sync_config);
+      sync_config = device_->getMultiDeviceSyncConfig();
+      ROS_INFO_STREAM("After load sync mode: " << OBSyncModeToString(sync_config.syncMode));
+    }
     if (!device_preset_.empty()) {
       ROS_INFO_STREAM("current device preset: " << device_->getCurrentPresetName());
       ROS_INFO_STREAM("load device preset: " << device_preset_);

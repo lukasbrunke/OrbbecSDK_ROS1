@@ -1166,7 +1166,7 @@ void OBCameraNode::onNewFrameCallback(std::shared_ptr<ob::Frame> frame,
   CHECK_NOTNULL(device_info.get());
   auto pid = device_info->pid();
   if (pid == GEMINI_335_PID || pid == GEMINI_336_PID) {
-    auto metadata = OB_FRAME_METADATA_TYPE_TIMESTAMP;
+    auto metadata = OB_FRAME_METADATA_TYPE_SENSOR_TIMESTAMP;
     if (frame->hasMetadata(metadata)) {
       auto frame_metadata_timestamp = frame->getMetadataValue(metadata);
       timestamp = fromUsToROSTime(frame_metadata_timestamp);

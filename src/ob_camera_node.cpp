@@ -1162,6 +1162,16 @@ void OBCameraNode::onNewFrameCallback(std::shared_ptr<ob::Frame> frame,
   int height = static_cast<int>(video_frame->height());
   auto timestamp = use_hardware_time_ ? fromUsToROSTime(video_frame->timeStampUs())
                                       : fromUsToROSTime(video_frame->systemTimeStampUs());
+  auto device_info = device_->getDeviceInfo();
+  CHECK_NOTNULL(device_info.get());
+  auto pid = device_info->pid();
+  if (pid == GEMINI_335_PID || pid == GEMINI_336_PID) {
+    auto metadata = OB_FRAME_METADATA_TYPE_TIMESTAMP;
+    if (frame->hasMetadata(metadata)) {
+      auto frame_metadata_timestamp = frame->getMetadataValue(metadata);
+      timestamp = fromUsToROSTime(frame_metadata_timestamp);
+    }
+  }
   std::string frame_id = (depth_registration_ && stream_index == DEPTH)
                              ? depth_aligned_frame_id_[stream_index]
                              : optical_frame_id_[stream_index];

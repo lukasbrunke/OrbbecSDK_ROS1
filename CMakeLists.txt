@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(orbbec_camera)
 
 # Compiler settings
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -O3")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -O3")
@@ -24,7 +24,7 @@ elseif ((${MACHINES} MATCHES "aarch64") AND (${MACHINES_BIT} MATCHES "64"))
 elseif ((${MACHINES} MATCHES "aarch64") AND (${MACHINES_BIT} MATCHES "32"))
   set(HOST_PLATFORM "arm32")
 endif ()
-
+add_compile_definitions(-DGLOG_USE_GLOG_EXPORT)
 # Paths
 set(ORBBEC_LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/SDK/lib/${HOST_PLATFORM})
 set(ORBBEC_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/SDK/include/)
@@ -77,7 +77,8 @@ find_package(Eigen3 REQUIRED)
 find_package(Boost REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(Threads REQUIRED)
-pkg_search_module(GLOG REQUIRED libglog)
+find_package(glog REQUIRED)
+#pkg_search_module(GLOG REQUIRED libglog)
 # Additional dependencies based on options
 if (USE_RK_HW_DECODER)
   pkg_search_module(RK_MPP REQUIRED rockchip_mpp)
@@ -182,11 +183,11 @@ endif ()
 set(COMMON_LINK_LIBRARIES
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
-  ${GLOG_LIBRARIES}
   -lOrbbecSDK
   -L${ORBBEC_LIBS_DIR}
   Threads::Threads
   -lrt
+  glog::glog
 )
 
 if (USE_RK_HW_DECODER)
